@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AntiGravity Identity Dashboard</title>
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- CDNs for dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js" type="application/javascript"></script>
+</head>
+<body>
+
+    <!-- Immersive Entry Splash Screen -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo-3d">
+                <span class="splash-icon">🛡️</span>
+            </div>
+            <h1 class="splash-title">AntiGravity<br><span class="splash-subtitle">Identity Portal</span></h1>
+            <p class="splash-desc">Securing the future of decentralized trust.</p>
+            
+            <div class="voice-security-toggle splash-voice-toggle">
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="voiceLockCheckbox">
+                    <span class="checkmark"></span>
+                    Enable Voice-Lock Security
+                </label>
+            </div>
+
+            <button id="initSystemBtn" class="splash-btn">
+                <span class="btn-glow"></span>
+                <span class="btn-text">INITIALIZE SYSTEM</span>
+            </button>
+        </div>
+        <div class="particles"></div>
+    </div>
+    
+    <!-- Onboarding View -->
+    <div id="onboarding-view" class="hidden">
+        <div class="auth-container">
+            <header class="auth-header">
+                <div class="logo">
+                    <span class="logo-icon">🛡️</span>
+                    <h1>AntiGravity ID</h1>
+                </div>
+                <p>Enterprise Decentralized Identity</p>
+            </header>
+
+            <div id="statusAlert" class="alert hidden"></div>
+
+            <div class="wallet-connect-area" id="walletArea">
+                <button id="connectWalletBtn" class="btn primary-btn btn-large">Connect Identity Wallet</button>
+                <p id="walletAddress" class="hidden wallet-badge">0x...</p>
+            </div>
+
+            <div id="authTabs" class="tabs hidden">
+                <button class="tab-btn active" data-target="register-section">1. Register</button>
+                <button class="tab-btn" data-target="verify-section">2. Authenticate</button>
+            </div>
+
+            <div class="auth-sections">
+                <!-- Registration Section -->
+                <section id="register-section" class="active-section hidden">
+                    <div class="card">
+                        <h2>Initialize Identity</h2>
+                        <p class="subtitle">Securely bind your biometric signature to the blockchain.</p>
+                        
+                        <div class="webcam-container">
+                            <video id="registerVideo" autoplay playsinline></video>
+                            <canvas id="registerCanvas" class="hidden"></canvas>
+                            <!-- Unique Scanning Overlay -->
+                            <div class="face-guide"></div>
+                            <div class="scanning-grid hidden" id="regScanGrid"></div>
+                            <div class="scan-status" id="regScanStatus">Awaiting Capture...</div>
+                        </div>
+
+                        <button id="captureRegisterBtn" class="btn action-btn">
+                            <span class="icon">📸</span> Capture & Encrypt
+                        </button>
+                        
+                        <div id="registerLogs" class="logs-console"></div>
+                    </div>
+                </section>
+
+                <!-- Authentication Section -->
+                <section id="verify-section" class="hidden">
+                    <div class="card">
+                        <h2>Zero-Trust Login</h2>
+                        <p class="subtitle">Verify your identity to access the secure dashboard.</p>
+                        
+                        <div class="webcam-container">
+                            <video id="verifyVideo" autoplay playsinline></video>
+                            <canvas id="verifyCanvas" class="hidden"></canvas>
+                            <!-- Unique Scanning Overlay -->
+                            <div class="face-guide"></div>
+                            <div class="scanning-grid hidden" id="authScanGrid"></div>
+                            <div class="scan-status" id="authScanStatus">Awaiting Verification...</div>
+                        </div>
+
+                        <div class="voice-security-toggle">
+                            <div id="voiceStatus" class="voice-status hidden">
+                                <span class="mic-icon">🎙️</span>
+                                <span class="voice-text">Say "Authenticate Me"</span>
+                                <div class="pulse-ring"></div>
+                            </div>
+                        </div>
+
+                        <button id="captureVerifyBtn" class="btn action-btn">
+                            <span class="icon">🔍</span> Run Biometric Scan
+                        </button>
+
+                        <div id="verifyLogs" class="logs-console"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view" class="hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo-icon">🛡️</span>
+                <h2>AntiGravity</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">Identity Passport</a>
+                <a href="#" class="nav-item">Access Logs</a>
+                <a href="#" class="nav-item">Data Permissions</a>
+                <a href="#" class="nav-item">Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn outline-btn">Lock Session</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <header class="dashboard-topbar">
+                <h2>Identity Passport</h2>
+                <div class="user-badge">
+                    <span class="status-dot green"></span> Verified
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- ID Card -->
+                <div class="id-card">
+                    <div class="id-header">
+                        <h3>Decentralized Identity (DID)</h3>
+                        <span class="blockchain-badge">Ethereum Network</span>
+                    </div>
+                    <div class="id-body">
+                        <div class="id-field">
+                            <label>DID Document</label>
+                            <p id="dashDid" class="monospace">did:ethr:0x...</p>
+                        </div>
+                        <div class="id-field">
+                            <label>Wallet Address</label>
+                            <p id="dashWallet" class="monospace">0x...</p>
+                        </div>
+                        <div class="id-field">
+                            <label>Biometric IPFS Hash</label>
+                            <p id="dashIpfs" class="monospace">Qm...</p>
+                        </div>
+                        <div class="id-field">
+                            <label>Verification Level</label>
+                            <p class="highlight">Level 3 (AI Facial + Liveness)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <h3>Recent Access Logs</h3>
+                    <div class="log-table">
+                        <div class="table-header">
+                            <span>Date</span>
+                            <span>Action</span>
+                            <span>Status</span>
+                            <span>Method</span>
+                        </div>
+                        <div class="table-row">
+                            <span id="logTime1">Just now</span>
+                            <span>Dashboard Login</span>
+                            <span class="status-success">Granted</span>
+                            <span>Zero-Knowledge AI Match</span>
+                        </div>
+                        <div class="table-row">
+                            <span>Earlier today</span>
+                            <span>Healthcare Portal Access</span>
+                            <span class="status-success">Granted</span>
+                            <span>Zero-Knowledge AI Match</span>
+                        </div>
+                        <div class="table-row">
+                            <span>Yesterday</span>
+                            <span>Bank Transfer Approval</span>
+                            <span class="status-failed">Denied (Spoof Detected)</span>
+                            <span>Liveness Check Failed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

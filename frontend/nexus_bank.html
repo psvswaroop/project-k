@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Global Bank - Secure Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="nexus_bank.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <span class="logo-icon">🌐</span>
+            <h1>Nexus Global</h1>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active">Accounts</a>
+            <a href="#">Transfers</a>
+            <a href="#">Investments</a>
+            <div class="user-profile">
+                <div class="avatar"></div>
+                <span>Verified User</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <header class="page-header">
+            <h2>Welcome back.</h2>
+            <p>Your session is secured and authenticated via AntiGravity ID Biometrics.</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Balance Card -->
+            <div class="card balance-card glass">
+                <h3>Total Balance</h3>
+                <div class="balance-amount">$245,890.00</div>
+                <div class="balance-change positive">+2.4% this month</div>
+                
+                <div class="action-buttons">
+                    <button class="btn primary-btn">Send Money</button>
+                    <button class="btn secondary-btn">Deposit</button>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="card glass">
+                <h3>Recent Transactions</h3>
+                <div class="transaction-list">
+                    <div class="transaction-item">
+                        <div class="tx-info">
+                            <div class="tx-icon">🏢</div>
+                            <div>
+                                <h4>Stripe Payout</h4>
+                                <p>Today, 2:45 PM</p>
+                            </div>
+                        </div>
+                        <div class="tx-amount positive">+$4,200.00</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="tx-info">
+                            <div class="tx-icon">🛒</div>
+                            <div>
+                                <h4>Apple Store</h4>
+                                <p>Yesterday, 10:20 AM</p>
+                            </div>
+                        </div>
+                        <div class="tx-amount negative">-$1,299.00</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="tx-info">
+                            <div class="tx-icon">⚡</div>
+                            <div>
+                                <h4>AWS Cloud Services</h4>
+                                <p>Oct 24, 8:00 AM</p>
+                            </div>
+                        </div>
+                        <div class="tx-amount negative">-$450.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

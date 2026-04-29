@@ -1,0 +1,3 @@
+@echo off
+echo Opening AntiGravity ID Frontend...
+start "" "frontend\index.html"
